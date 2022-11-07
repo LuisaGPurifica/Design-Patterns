@@ -1,0 +1,5 @@
+package principle.open.closed;
+
+public enum Color {
+
+}

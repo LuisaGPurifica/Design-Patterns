@@ -1,0 +1,30 @@
+package principle.open.closed;
+
+/**
+ * Software entities should be open for extension, but closed for modification.
+ * 
+ * Such entities should be created in a way that their core functionalities can
+ * be extended to other entities without altering the initial entity's source
+ * code.
+ *
+ */
+public enum Color {
+	RED, GREEN, BLUE
+}
+
+enum Size {
+	SMALL, MEDIUM, LARGE, HUGE
+}
+
+class Product {
+	public String name;
+	public Color color;
+	public Size size;
+
+	public Product(String name, Color color, Size size) {
+		this.name = name;
+		this.color = color;
+		this.size = size;
+	}
+
+}
