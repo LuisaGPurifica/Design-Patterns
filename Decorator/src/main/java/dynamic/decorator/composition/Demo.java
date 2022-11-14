@@ -4,14 +4,24 @@ public class Demo {
 
 	public static void main(String[] args) {
 
-		ColoredShape<Square> blueSquare = new ColoredShape<>(() -> new Square(20), "blue");
+		MyStringBuilder msb = new MyStringBuilder();
 
-		System.out.println(blueSquare.info());
+		msb.append("hello").appendLine(" world");
+		System.out.println(msb.concat("and this too"));
 
-		TransparentShape<ColoredShape<Circle>> myCircle = new TransparentShape<>(
-				() -> new ColoredShape<>(() -> new Circle(5), "green"), 50);
-
-		System.out.println(myCircle.info());
+		/**
+		 * Static decorator composition
+		 * 
+		 * ColoredShape<Square> blueSquare = new ColoredShape<>(() -> new Square(20),
+		 * "blue");
+		 * 
+		 * System.out.println(blueSquare.info());
+		 * 
+		 * TransparentShape<ColoredShape<Circle>> myCircle = new TransparentShape<>( ()
+		 * -> new ColoredShape<>(() -> new Circle(5), "green"), 50);
+		 * 
+		 * System.out.println(myCircle.info());
+		 **/
 
 		/**
 		 * Dynamic decorator composition
