@@ -1,5 +1,7 @@
 package dynamic.decorator.composition;
 
+import java.util.function.Supplier;
+
 public class Circle implements Shape {
 
 	private float radius;
@@ -40,13 +42,16 @@ class Square implements Shape {
 
 }
 
-class ColoredShape implements Shape {
+//we are NOT altering the base class of these objects
+//cannot make ColoredSquare, ColoredCircle
+
+class ColoredShape<T extends Shape> implements Shape {
 
 	private Shape shape;
 	private String color;
 
-	public ColoredShape(Shape shape, String color) {
-		this.shape = shape;
+	public ColoredShape(Supplier<? extends T> ctor, String color) {
+		shape = ctor.get();
 		this.color = color;
 	}
 
@@ -57,13 +62,13 @@ class ColoredShape implements Shape {
 
 }
 
-class TransparentShape implements Shape {
+class TransparentShape<T extends Shape> implements Shape {
 
 	private Shape shape;
 	private int transparency;
 
-	public TransparentShape(Shape shape, int transparency) {
-		this.shape = shape;
+	public TransparentShape(Supplier<? extends T> ctor, int transparency) {
+		shape = ctor.get();
 		this.transparency = transparency;
 	}
 
