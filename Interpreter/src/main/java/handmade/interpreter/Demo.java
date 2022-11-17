@@ -1,7 +1,6 @@
 package handmade.interpreter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,17 +119,31 @@ public class Demo {
 					result.right = integer;
 				break;
 			case LPAREN:
+				int j = 0;
+				for (; j < tokens.size(); ++j) {
+					if (tokens.get(j).type == Token.Type.RPAREN)
+						break;
+					List<Token> subexpression = tokens.stream().skip(i + 1).limit(j - i - 1)
+							.collect(Collectors.toList());
+					Element element = parse(subexpression);
+					if (!haveLHS) {
+						result.left = element;
+						haveLHS = true;
+					} else {
+						result.right = element;
+					}
+				}
+				i = j;
 				break;
 			case MINUS:
+				result.type = BinaryOperation.Type.SUBSTRACTION;
 				break;
 			case PLUS:
-				break;
-			case RPAREN:
-				break;
-			default:
+				result.type = BinaryOperation.Type.ADDITION;
 				break;
 			}
 		}
+		return result;
 	}
 
 	public static void main(String[] args) {
@@ -139,6 +152,9 @@ public class Demo {
 
 		List<Token> tokens = lex(input);
 		System.out.println(tokens.stream().map(t -> t.toString()).collect(Collectors.joining("\t")));
+
+		Element parsed = parse(tokens);
+		System.out.println(input + " = " + parsed.eval());
 
 	}
 
